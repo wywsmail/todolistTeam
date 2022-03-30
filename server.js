@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const errHandle = require('./errorHandle');
 const getTodo = require('./getTodo');
 const postTodo = require('./postTodo');
+const { deleteTodo, deleteAllTodos } = require('./deleteTodo');
 const todos = [];
 
 const requestListener = (req, res)=>{
@@ -28,8 +29,10 @@ const requestListener = (req, res)=>{
         });
     }else if(req.url=="/todos" && req.method == "DELETE"){
         // deleteTodo.js
+        deleteAllTodos(res, headers, todos);
     }else if(req.url.startsWith("/todos/") && req.method=="DELETE"){
         // deleteTodo.js
+        deleteTodo(res, headers, req.url, todos);
     }else if(req.url.startsWith("/todos/") && req.method=="PATCH"){
         // patchTodo.js
     }else if(req.method == "OPTIONS"){
